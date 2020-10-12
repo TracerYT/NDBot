@@ -29,4 +29,6 @@ for(const file of eventFiles) {
     }
 }
 
+console.log("Bot has been started!");
+
 bot.login(process.env.TOKEN);
