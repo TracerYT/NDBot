@@ -6,9 +6,16 @@ module.exports = {
     name: 'ready',
 	description: `OnReady Event`,
 	execute(_, bot) {
-		bot.user.setPresence({
-			activity: languageProfiles.watchingProfile,
-				type: "WATCHING",
+		try{
+			bot.user.setPresence({
+				activity: {
+					name: `${languageProfiles.watchingProfile}`,
+					type: "WATCHING",
+				}
 			}, "online");
+		}catch(exc){
+			console.log(`${languageProfiles.errorOccured}: ${exc}`);
+			return;
+		}
 	}
 }

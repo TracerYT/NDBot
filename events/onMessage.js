@@ -1,6 +1,6 @@
 const { prefix, language } = require("../botconfig.json");
 
-const langProfiles = require(`../lang/${language}.json`);
+const languageProfiles = require(`../lang/${language}.json`);
 
 module.exports = {
     name: 'message',
@@ -12,15 +12,15 @@ module.exports = {
         const command = args.shift().toLowerCase();
 
         if (!bot.commands.has(command)){
-            message.reply(langProfiles.noCommandFound);
+            message.reply(languageProfiles.noCommandFound);
             return;
         }
 
         try {
             bot.commands.get(command).execute(message, args);
-        } catch (error) {
-            console.error(error);
-            message.reply(langProfiles.errorCommand);
+        } catch (exc) {
+            console.log(`${languageProfiles.errorOccured} while trying to activate a command: ${exc}`);
+            return;
         }
 	}
 }
