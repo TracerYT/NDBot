@@ -13,4 +13,4 @@ NDBot is a special Discord.JS bot that can do almost all administrative tasks fo
 [![Discord.JS Version](https://img.shields.io/node/v/discord.js?label=Discord.JS&style=plastic)](https://discord.js.org/#/)
 
 ### Commands
-- [Serverinfo](https://github.com/TracerYT/NDBot/blob/master/.github_commands/serverinfo.md)
+- [Serverinfo](https://github.com/TracerYT/NDBot/blob/master/.github/commands/serverinfo/serverinfo.md)
