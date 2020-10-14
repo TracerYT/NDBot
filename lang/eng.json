@@ -6,5 +6,6 @@
     "noUserFound": "No user with specified ID found",
     "errorOccured": "An error occured",
     "correctUsage": "Invalid data provided. Correct usage",
-    "noReasonSpecified": "No reason specified"
+    "noReasonSpecified": "No reason specified",
+    "cantDoThisToYourself": "You cannot do that to yourself"
 }

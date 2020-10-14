@@ -17,7 +17,7 @@ module.exports = {
         }
 
         try {
-            bot.commands.get(command).execute(message, args);
+            bot.commands.get(command).execute(message, args, bot);
         } catch (exc) {
             console.log(`${languageProfiles.errorOccured} while trying to activate a command: ${exc}`);
             return;
