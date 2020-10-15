@@ -11,5 +11,9 @@ module.exports = {
         });
 
         return;
+    },
+    fUpper(text){
+        let slicedMessage = text.slice(1);
+        return text[0].toUpperCase()+slicedMessage;
     }
 }

@@ -5,6 +5,7 @@ const utilsMessage = require("../utils/message");
 module.exports = {
 	name: 'kick',
     description: `Kicks a player`,
+    aliases: [],
     usage: `<player> [reason]`,
 	execute(message, args) {
         try{

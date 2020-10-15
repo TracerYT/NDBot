@@ -5,6 +5,7 @@ const utilsMessage = require("../utils/message");
 module.exports = {
 	name: 'ban',
     description: `Ban a player`,
+    aliases: [],
     usage: `<player> [reason]`,
 	execute(message, args) {
         message.delete({timeout: 1});
@@ -30,7 +31,7 @@ module.exports = {
             return;
         }
 
-        let member = message.guild.member(user) || message.guild.members.get(user);
+        let member = message.guild.members.fetch(user.id) || message.guild.members.cache.get(user);
 
         let reason = args.slice(2).join(" ");
         if(!reason) reason = languageProfiles.noReasonSpecified;

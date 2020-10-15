@@ -5,6 +5,7 @@ const utilsMessage = require("../utils/message");
 module.exports = {
 	name: 'purge',
     description: `Clears the chat`,
+    aliases: [],
     usage: `<amount>`,
 	execute(message, args) {
         message.delete();
@@ -19,7 +20,11 @@ module.exports = {
             return;
         }
 
-        let amount = parseInt(args[0]);
+        let amount = parseInt(args[0]);;
+        if(args[0] === "all"){
+            amount = 100;
+        }
+        
         if(amount > 100) amount = 100;
 
         message.channel.messages.fetch({ limit: amount })
