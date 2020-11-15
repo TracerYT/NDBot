@@ -1,0 +1,10 @@
+{
+    "noCommandFound": "That is not the correct command",
+    "errorCommand": "There was an error trying to execute that command",
+    "watchingProfile": "my owner's profile",
+    "noPermissions": "You are not authorized to do that",
+    "noUserFound": "No user with specified ID found",
+    "errorOccured": "An error occured",
+    "correctUsage": "Invalid data provided. Correct usage",
+    "noReasonSpecified": "No reason specified"
+}
