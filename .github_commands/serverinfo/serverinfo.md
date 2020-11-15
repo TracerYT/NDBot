@@ -7,4 +7,4 @@
 
 ### Example
 
-![Example image](https://github.com/TracerYT/NDBot/blob/master/.github_commands/serverinfo/example.png)
+![Example image](https://github.com/TracerYT/NDBot/blob/javascript/.github_commands/serverinfo/example.png)
