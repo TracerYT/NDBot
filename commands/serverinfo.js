@@ -12,7 +12,7 @@ module.exports = {
 
 		data.title = fUpper(this.name);
 		data.description = "Here is the full info of the current server";
-		data.url = `https://github.com/TracerYT/NDBot/blob/master/.github_commands/${this.name}/${this.name}.md`;
+		data.url = `https://github.com/TracerYT/NDBot/blob/javascript/.github_commands/${this.name}/${this.name}.md`;
 
 		data.fields = [
 			{
