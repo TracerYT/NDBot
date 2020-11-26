@@ -6,8 +6,9 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.ndbot.utils.Embeds;
+import org.ndbot.utils.StringUtil;
+import org.ndbot.utils.Time;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +60,10 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
 
             embed.setDescription("Displays informations about server");
 
+            embed.addField("Region", StringUtil.toUpperFirst(guild.getRegionRaw()),true);
+            embed.addField("Created",guild.getTimeCreated().format(Time.getFormat()),true);
+            embed.addField("Joined",member.getTimeJoined().format(Time.getFormat()),true);
+
             embed.addField("Members", String.valueOf(members), true);
             embed.addField("Bots", String.valueOf(bots), true);
             embed.addField("Users", String.valueOf(users), true);
@@ -67,11 +72,13 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
             embed.addField("Top 3 roles", top3Roles, true);
             embed.addField("Your top 3 roles", playerTop3.toString(), true);
 
-            embed.addField("Region",guild.getRegionRaw(),true);
-            embed.addField("Created",guild.getTimeCreated().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),true);
+            embed.addField("Text Channels", String.valueOf(guild.getTextChannels().size()), true);
+            embed.addField("Voice Channels", String.valueOf(guild.getVoiceChannels().size()), true);
+            embed.addField("Categories", String.valueOf(guild.getCategories().size()), true);
 
             embed.setAuthor(event.getAuthor().getAsTag());
             embed.setTitle(getName(), String.format(COMMAND_URL, getName(), getName()));
+            embed.setThumbnail(guild.getIconUrl());
 
             channel.sendMessage(embed.build()).queue();
         }
