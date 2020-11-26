@@ -5,4 +5,4 @@
 - si
 
 #### Usage ####
-![Example usage]("example.png")
+![Example usage](example.png)
