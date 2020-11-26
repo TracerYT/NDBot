@@ -34,7 +34,8 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
             TextChannel channel = event.getChannel();
             Embeds embeds = new Embeds(event.getJDA());
             EmbedBuilder embed = embeds.getDefaultEmbed();
-            embed.setDescription("desc");
+            embed.setDescription("Displays informations about server");
+            embed.addField("Members", String.valueOf(event.getGuild().getMembers().size()), true);
             embed.setAuthor(event.getAuthor().getAsTag());
             embed.setTitle(getName(), String.format(COMMAND_URL, getName(), getName()));
 
