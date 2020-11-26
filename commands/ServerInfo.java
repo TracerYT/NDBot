@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.ndbot.Settings;
 import org.ndbot.utils.Embeds;
 import org.ndbot.utils.StringUtil;
 import org.ndbot.utils.Time;
@@ -19,6 +20,11 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
     }
 
     @Override
+    public String getSyntax() {
+        return String.format("%s%s", Settings.PREFIX,this.getName());
+    }
+
+    @Override
     public String[] getAliases() {
         return new String[]{
                 "si",
@@ -30,6 +36,18 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event){
         if (onCommand(event)) {
+            boolean isCmd = false;
+            String[] args = event.getMessage().getContentRaw().split(" ");
+            if(!args[0].equalsIgnoreCase(Settings.PREFIX+this.getName())){
+                for(String alias : this.getAliases()){
+                    if(args[0].equalsIgnoreCase(Settings.PREFIX+alias)) {
+                        isCmd = true;
+                        break;
+                    }
+                }
+            }
+            if(!isCmd) return;
+
             Guild guild = event.getGuild();
             Member member = guild.getMember(event.getAuthor());
             if(member == null) return;
