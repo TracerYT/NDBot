@@ -5,15 +5,11 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import org.ndbot.Settings;
 import org.ndbot.utils.Embeds;
 
-import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Stream;
 
 public class ServerInfo extends ListenerAdapter implements ICommand{
     @Override
@@ -34,30 +30,45 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event){
         if (onCommand(event)) {
             Guild guild = event.getGuild();
+            Member member = guild.getMember(event.getAuthor());
+            if(member == null) return;
+
             TextChannel channel = event.getChannel();
             Embeds embeds = new Embeds(event.getJDA());
             EmbedBuilder embed = embeds.getDefaultEmbed();
+            List<Role> cachedRoles = guild.getRoles();
+
             int members = guild.getMembers().size();
             long bots = guild.getMembers().stream().filter(m -> m.getUser().isBot()).count();
             long users = guild.getMembers().stream().filter(m -> !m.getUser().isBot()).count();
-            List<Role> cachedRoles = guild.getRoles();
             int rolesCount = cachedRoles.size();
 
-            List<Role> roles = new ArrayList<>();
-            channel.sendMessage(String.valueOf(rolesCount)).queue();
+            List<Role> guildRoles = new ArrayList<>();
+            List<Role> playerRoles = member.getRoles();
+
             for (Role role: cachedRoles) {
-                if(role.getPosition() == rolesCount - 3){
-                    channel.sendMessage(role.getName()).queue();
-                    roles.add(role);
-                }
+                if(role.getPositionRaw() >= rolesCount - 3)
+                    guildRoles.add(role);
             }
 
+            StringBuilder playerTop3 = new StringBuilder();
+            for (Role playerRole : playerRoles) playerTop3.append(playerRole.getAsMention()).append(" ");
+
+
+            String top3Roles = String.format("%s %s %s", guildRoles.get(0),guildRoles.get(1),guildRoles.get(2));
+
             embed.setDescription("Displays informations about server");
+
             embed.addField("Members", String.valueOf(members), true);
             embed.addField("Bots", String.valueOf(bots), true);
             embed.addField("Users", String.valueOf(users), true);
 
-            embed.addField("Roles", String.format("%s %s %s", roles.get(0),roles.get(1),roles.get(2)), true);
+            embed.addField("Roles", String.valueOf(rolesCount), true);
+            embed.addField("Top 3 roles", top3Roles, true);
+            embed.addField("Your top 3 roles", playerTop3.toString(), true);
+
+            embed.addField("Region",guild.getRegionRaw(),true);
+            embed.addField("Created",guild.getTimeCreated().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),true);
 
             embed.setAuthor(event.getAuthor().getAsTag());
             embed.setTitle(getName(), String.format(COMMAND_URL, getName(), getName()));
