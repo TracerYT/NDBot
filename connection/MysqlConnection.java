@@ -12,7 +12,7 @@ public class MysqlConnection extends MysqlSettings{
 
     private void Connect(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             super.CONNECTION = DriverManager.getConnection(String.format(super.URL,super.HOST, super.PORT, super.DATABASE_NAME),super.USERNAME, super.PASSWORD);
             Console.send("MySQL connection established successfully!");
         }catch(SQLException | ClassNotFoundException exc){

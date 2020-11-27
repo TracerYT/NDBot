@@ -9,9 +9,13 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.ndbot.Settings;
+import org.ndbot.connection.MysqlQuery;
 import org.ndbot.utils.Embeds;
 import org.ndbot.utils.Message;
 import org.ndbot.utils.Time;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserInfo extends ListenerAdapter implements ICommand{
     @Override
@@ -68,6 +72,17 @@ public class UserInfo extends ListenerAdapter implements ICommand{
             }else{
                 channel.sendMessage(String.format(Message.errors.get("invalidSyntax"), this.getSyntax())).queue();
                 return;
+            }
+
+            MysqlQuery query = new MysqlQuery();
+            ResultSet res = query.Select("penalties",new String[]{"userid"},new String[]{target.getId()});
+            try {
+                while(res.next()) {
+                    channel.sendMessage(res.getString(0)).queue();
+                    channel.sendMessage(res.getString(1)).queue();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
 
             StringBuilder roles = new StringBuilder();

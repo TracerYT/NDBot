@@ -8,7 +8,7 @@ public abstract class MysqlSettings {
     protected final int PORT = 3306;
     protected final String USERNAME = "root";
     protected final String PASSWORD = "";
-    protected final String DATABASE_NAME = "";
+    protected final String DATABASE_NAME = "ndbot";
 
     protected Connection CONNECTION;
 }
