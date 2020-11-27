@@ -13,13 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NDBot {
+    private static final MysqlConnection mysql = new MysqlConnection();
     private static JDA jda;
     public static NDBot instance;
     private NDBot(){instance = this;}
 
     public static void main(String[] args) {
         Message.__init();
-        MysqlConnection mysql = new MysqlConnection();
         new NDBot();
         instance.enableBot();
 
@@ -41,5 +41,6 @@ public class NDBot {
 
     private void disableBot(){
         jda = null;
+        mysql.CloseConnection();
     }
 }

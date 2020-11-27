@@ -12,6 +12,7 @@ import org.ndbot.utils.Time;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ServerInfo extends ListenerAdapter implements ICommand{
     @Override
@@ -45,7 +46,7 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
                         break;
                     }
                 }
-            }
+            }else isCmd = true;
             if(!isCmd) return;
 
             Guild guild = event.getGuild();
@@ -62,19 +63,25 @@ public class ServerInfo extends ListenerAdapter implements ICommand{
             long users = guild.getMembers().stream().filter(m -> !m.getUser().isBot()).count();
             int rolesCount = cachedRoles.size();
 
-            List<Role> guildRoles = new ArrayList<>();
+            StringBuilder guildRoles = new StringBuilder();
             List<Role> playerRoles = member.getRoles();
 
+            int counter = 0;
             for (Role role: cachedRoles) {
-                if(role.getPositionRaw() >= rolesCount - 3)
-                    guildRoles.add(role);
+                if(counter == 3) break;
+                guildRoles.append(role.getAsMention()).append("\n");
+                counter++;
             }
 
+            counter = 0;
             StringBuilder playerTop3 = new StringBuilder();
-            for (Role playerRole : playerRoles) playerTop3.append(playerRole.getAsMention()).append(" ");
+            for (Role playerRole : playerRoles) {
+                if(counter == 3) break;
+                playerTop3.append(playerRole.getAsMention()).append("\n");
+                counter++;
+            }
 
-
-            String top3Roles = String.format("%s %s %s", guildRoles.get(0),guildRoles.get(1),guildRoles.get(2));
+            String top3Roles = String.format("%s", guildRoles.toString());
 
             embed.setDescription("Displays informations about server");
 

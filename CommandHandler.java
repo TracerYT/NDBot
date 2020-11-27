@@ -12,5 +12,6 @@ public class CommandHandler {
     public void registerCommands(){
         jda.addEventListener(new ServerInfo());
         jda.addEventListener(new UserInfo());
+        jda.addEventListener(new Mute());
     }
 }

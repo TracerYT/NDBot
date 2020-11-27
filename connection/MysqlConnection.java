@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class MysqlConnection extends MysqlSettings{
     public MysqlConnection(){
-        if(super.CONNECTION == null)
+        if(GetConnection() == null)
             this.Connect();
     }
 

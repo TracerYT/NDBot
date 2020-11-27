@@ -49,7 +49,7 @@ public class UserInfo extends ListenerAdapter implements ICommand{
                         break;
                     }
                 }
-            }
+            }else isCmd = true;
             if(!isCmd) return;
 
             Guild guild = event.getGuild();
@@ -76,10 +76,10 @@ public class UserInfo extends ListenerAdapter implements ICommand{
 
             MysqlQuery query = new MysqlQuery();
             ResultSet res = query.Select("penalties",new String[]{"userid"},new String[]{target.getId()});
+            int penalties = 0;
             try {
                 while(res.next()) {
-                    channel.sendMessage(res.getString(0)).queue();
-                    channel.sendMessage(res.getString(1)).queue();
+                    penalties++;
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -97,7 +97,7 @@ public class UserInfo extends ListenerAdapter implements ICommand{
 
             embed.addField("Roles", roles.toString(), true);
 
-            embed.addField("","",true);
+            embed.addField("Penalties",String.valueOf(penalties),true);
 
             embed.setAuthor(event.getAuthor().getAsTag());
             embed.setTitle(getName(), String.format(COMMAND_URL, getName(), getName()));
